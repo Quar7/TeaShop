@@ -1,0 +1,59 @@
+﻿@model IEnumerable<TeaViewModel>
+
+<h2>@ViewData["Title"]</h2>
+<hr />
+
+<div class="col-md-3 side-menu" data-spy="affix" data-offset-top="150">
+    <a is-active-route asp-controller="Tea" asp-action="Category" asp-route-category="0" class="btn btn-lg btn-primary btn-width">Herbata Czarna</a>
+    <a is-active-route asp-controller="Tea" asp-action="Category" asp-route-category="1" class="btn btn-lg btn-primary btn-width">Herbata Zielona</a>
+    <a is-active-route asp-controller="Tea" asp-action="Category" asp-route-category="2" class="btn btn-lg btn-primary btn-width">Herbata Biała</a>
+</div>
+
+<div class="row col-md-offset-4">
+    @foreach (var tea in Model)
+    {
+        <div class="well col-md-12">
+            <div class="media">
+                <div class="col-md-3 col-xs-8 text-center">
+                    <div class="media-left">
+                        <a asp-action="Details" asp-route-id="@tea.Id"><img src="~/images/teaImage.jpg" class="media-object" /></a>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="media-body">
+                        <div class="col-md-6">
+                            <a asp-action="Details" asp-route-id="@tea.Id"><h3 class="media-heading"><strong>@tea.Name.ToUpper()</strong></h3></a>
+                            <br />
+                            <p><strong>Rodzaj herbaty:</strong> @tea.Category</p>
+                            <p><strong>Kraj pochodzenia:</strong> @tea.CountryOfOrigin</p>
+                            <p>
+                                @if (tea.Quantity > 0)
+                                {
+                                    <span class="label label-success">Produkt dostepny</span>
+                                }
+                                else
+                                {
+                                    <span class="label label-danger">Produkt niedostepny</span>
+                                }
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><div class="btn btn-lg btn-default btn-width disabled"><strong>Cena:</strong> @tea.Price.ToString("c")</div></p>
+                            @if (tea.Quantity > 0)
+                            {
+                                <form id="@tea.Id" asp-controller="Cart" asp-action="AddToCart" method="post">
+                                    <input type="hidden" name="Id" id="Id" value="@tea.Id" />
+                                    <button type="submit" class="btn btn-lg btn-primary btn-width">Dodaj do koszyka</button>
+                                </form>
+                            }
+                            else
+                            {
+                                <a asp-controller="" asp-action="" class="btn btn-lg btn-primary btn-width disabled-price">Dodaj do koszyka</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

@@ -1,0 +1,18 @@
+﻿@inject SignInManager<Customer> SignInManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <form asp-controller="Account" asp-action="Logout" method="post" class="navbar-right">
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <button type="submit" class="btn btn-link navbar-btn navbar-link">Wyloguj</button>
+            </li>
+        </ul>
+    </form>
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li><a asp-controller="Account" asp-action="Login">Zaloguj</a></li>
+    </ul>
+}

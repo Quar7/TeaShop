@@ -1,0 +1,53 @@
+﻿@model IEnumerable<OrderListViewModel>
+@{
+    ViewData["Title"] = "Lista zamówień";
+    Layout = "_Adminlayout";
+}
+
+<h2>@ViewData["Title"]</h2>
+<hr />
+<a asp-controller="Admin" asp-action="Index" class="btn btn-default"><i class="glyphicon glyphicon-chevron-left"></i>Wróć</a>
+<br /><br />
+
+<div class="table-responsive">
+    <table class="table table-hover text-center">
+        <tr class="row-grey">
+            <th style="vertical-align: middle;">
+                Nr zamówienia
+            </th>
+            <th style="vertical-align: middle;">
+                Klient
+            </th>
+            <th style="vertical-align: middle;">
+                Data
+            </th>
+            <th style="vertical-align: middle;">
+                Stan realizacji
+            </th>
+            <th style="vertical-align: middle;">
+                Szczegóły zamówienia
+            </th>
+        </tr>
+
+        @foreach (var order in Model)
+        {
+            <tr>
+                <td style="vertical-align: middle;">
+                    @order.Id
+                </td>
+                <td style="vertical-align: middle;">
+                    @order.Customer.FirstName @order.Customer.LastName
+                </td>
+                <td style="vertical-align: middle;">
+                    @order.Date
+                </td>
+                <td style="vertical-align: middle;">
+                    @(order.Completed ? "Zrealizowano" : "W trakcie")
+                </td>
+                <td style="vertical-align: middle;">
+                    <a asp-controller="Admin" asp-action="OrderDetails" asp-route-id="@order.Id" class="btn btn-primary">Szczegóły</a>
+                </td>
+            </tr>
+        }
+    </table>
+</div>

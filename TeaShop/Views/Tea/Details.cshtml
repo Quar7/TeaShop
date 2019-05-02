@@ -1,0 +1,53 @@
+﻿@model DetailsViewModel
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<h2>@ViewData["Title"]</h2>
+<hr />
+<a asp-controller="Tea" asp-action="Index" class="btn btn-default"><i class="glyphicon glyphicon-chevron-left"></i>Wróć</a>
+<br /><br />
+
+<div class="row">
+    <div class="well col-md-12">
+        <div class="media">
+            <div class="col-md-3 text-center">
+                <div class="media-left">
+                    <img src="~/images/teaImage.jpg" class="media-object" />
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="media-body">
+                    <div class="col-md-7">
+                        <h3 class="media-heading"><strong>@Model.Name.ToUpper()</strong></h3>
+                        <br />
+                        <p><strong>Rodzaj herbaty:</strong> @Model.Category</p>
+                        <p><strong>Kraj pochodzenia:</strong> @Model.CountryOfOrigin</p>
+                    </div>
+                    <div class="col-md-5 text-center">
+                        <p><div class="btn btn-lg btn-default btn-width disabled"><strong>Cena:</strong> @Model.Price.ToString("c")</div></p>
+                        @if (Model.Quantity > 0)
+                        {
+                            <form id="@Model.Id" asp-controller="Cart" asp-action="AddToCart" method="post">
+                                <input type="hidden" asp-for="Id" />
+                                <button type="submit" class="btn btn-lg btn-primary btn-width">Dodaj do koszyka</button>
+                            </form>
+                            <br /><br /><br />
+                            <p><div class="btn btn-success btn-width disabled">Produkt dostepny<br />Pozostało <strong>@Model.Quantity</strong> sztuk</div></p>
+                        }
+                        else
+                        {
+                            <a asp-controller="" asp-action="" class="btn btn-lg btn-primary btn-width disabled-price">Dodaj do koszyka</a>
+                            <br /><br /><br />
+                            <p><div class="btn btn-danger btn-width disabled">Produkt niedostepny</div></p>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <p class="description">@Model.Description</p>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,28 @@
+﻿@inject UserManager<Customer> UserManager
+@{
+    var user = await UserManager.GetUserAsync(User);
+    ViewData["Title"] = $"{user.Email} - Moje konto";
+}
+
+<h2>Moje Konto</h2>
+<h4>@user.Email</h4>
+<hr />
+<br />
+<p class="text-success"><strong>@ViewData["StatusMessageOk"]</strong></p>
+<p class="text-danger"><strong>@ViewData["StatusMessageBad"]</strong></p>
+
+<div class="row">
+    <div class="col-md-2">
+        <a asp-controller="Manage" asp-action="ChangeData" class="btn btn-primary btn-width">Dane adresowe</a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2">
+        <a asp-controller="Manage" asp-action="ChangePassword" class="btn btn-primary btn-width">Zmień hasło</a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2">
+        <a asp-controller="Manage" asp-action="ViewOrders" class="btn btn-primary btn-width">Moje zamówienia</a>
+    </div>
+</div>

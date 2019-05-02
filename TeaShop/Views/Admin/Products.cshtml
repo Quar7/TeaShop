@@ -1,0 +1,80 @@
+﻿@model IEnumerable<TeaViewModel>
+@{
+    ViewData["Title"] = "Lista Produktów";
+    Layout = "_Adminlayout";
+}
+
+<h2>@ViewData["Title"]</h2>
+<hr />
+<a asp-controller="Admin" asp-action="Index" class="btn btn-default"><i class="glyphicon glyphicon-chevron-left"></i>Wróć</a>
+<br /><br />
+<p class="text-success"><strong>@ViewData["StatusMessageOk"]</strong></p>
+<p class="text-danger"><strong>@ViewData["StatusMessageBad"]</strong></p>
+
+<p class="text-center"><a asp-controller="Admin" asp-action="AddProduct" class="btn btn-lg btn-primary">Dodaj nowy produkt</a></p>
+<br />
+<div class="table-responsive">
+    <table class="table table-striped text-center">
+        <tr>
+            <th class="col-xs-1">
+                Zdjęcie
+            </th>
+            <th style="vertical-align: middle;">
+                Id
+            </th>
+            <th style="vertical-align: middle;">
+                Nazwa
+            </th>
+            <th style="vertical-align: middle;">
+                Rodzaj
+            </th>
+            <th style="vertical-align: middle;">
+                Kraj pochodzenia
+            </th>
+            <th style="vertical-align: middle;">
+                Cena
+            </th>
+            <th style="vertical-align: middle;">
+                Ilość
+            </th>
+            <th style="vertical-align: middle;" colspan="2">
+                Dostępne akcje
+            </th>
+        </tr>
+
+        @foreach (var tea in Model)
+        {
+            <tr>
+                <td class="col-xs-1">
+                    <img src="~/images/teaImage.jpg" />
+                </td>
+                <td style="vertical-align: middle;">
+                    @tea.Id
+                </td>
+                <td style="vertical-align: middle;">
+                    @tea.Name
+                </td>
+                <td style="vertical-align: middle;">
+                    @tea.Category
+                </td>
+                <td style="vertical-align: middle;">
+                    @tea.CountryOfOrigin
+                </td>
+                <td style="vertical-align: middle;">
+                    @tea.Price.ToString("c")
+                </td>
+                <td style="vertical-align: middle;">
+                    @tea.Quantity szt
+                </td>
+                <td style="vertical-align: middle;">
+                    <a asp-controller="Admin" asp-action="EditProduct" asp-route-id="@tea.Id" class="btn btn-success">Edytuj</a>
+                </td>
+                <td style="vertical-align: middle;">
+                    <form asp-controller="Admin" asp-action="DeactivateProduct" asp-route-id="@tea.Id" method="post" class="form-horizontal">
+                        <button type="submit" class="btn btn-danger">Usuń</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </table>
+</div>

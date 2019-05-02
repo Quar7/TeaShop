@@ -1,0 +1,32 @@
+﻿@inject SignInManager<Customer> SignInManager
+@inject UserManager<Customer> UserManager
+@{
+    var user = await UserManager.GetUserAsync(User);
+}
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <form asp-controller="Account" asp-action="Logout" method="post" class="navbar-right">
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a asp-controller="" asp-action="" class="link-disabled">Witaj @user.FirstName!</a>
+            </li>
+            <li>
+                @await Component.InvokeAsync("Cart")
+            </li>
+            <li>
+                <a is-active-route asp-controller="Manage" asp-action="Index" title="Manage">Moje konto</a>
+            </li>
+            <li>
+                <button type="submit" class="btn btn-link navbar-btn navbar-link">Wyloguj</button>
+            </li>
+        </ul>
+    </form>
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li><a asp-controller="Account" asp-action="Register">Zarejestruj</a></li>
+        <li><a asp-controller="Account" asp-action="Login">Zaloguj</a></li>
+    </ul>
+}

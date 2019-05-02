@@ -1,0 +1,120 @@
+﻿@model OrderViewModel
+@{
+    ViewData["Title"] = "Formularz zamówienia";
+}
+
+<h2>@ViewData["Title"]</h2>
+<hr />
+<a asp-controller="Cart" asp-action="Index" class="btn btn-default"><i class="glyphicon glyphicon-chevron-left"></i>Wróć</a>
+<br /><br />
+
+<div class="col-md-6">
+    <h3 class="text-center">Podsumowanie zamówienia</h3>
+    <br />
+    @await Component.InvokeAsync("CartSummary")
+</div>
+
+<h3 class="text-center">Dane do wysyłki</h3>
+<p class="text-success text-center"><strong>@ViewData["StatusMessageOk"]</strong></p>
+<p class="text-danger text-center"><strong>@ViewData["StatusMessageBad"]</strong></p>
+<br />
+
+<form asp-controller="Order" asp-action="AddOrder" method="post" class="form-horizontal full-width-form">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label asp-for="FirstName" class="col-md-3 control-label"></label>
+            <div class="col-md-9">
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="LastName" class="col-md-3 control-label"></label>
+            <div class="col-md-9">
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Street" class="col-md-3 control-label"></label>
+            <div class="col-md-9">
+                <input asp-for="Street" class="form-control" />
+                <span asp-validation-for="Street" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="HouseNumber" class="col-md-3 control-label"></label>
+            <div class="col-md-9">
+                <input asp-for="HouseNumber" class="form-control" />
+                <span asp-validation-for="HouseNumber" class="text-danger"></span>
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <label asp-for="FlatNumber" class="col-md-3 control-label"></label>
+            <div class="col-md-9">
+                <input asp-for="FlatNumber" class="form-control" />
+                <span asp-validation-for="FlatNumber" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ZipCode" class="col-md-3 control-label"></label>
+            <div class="col-md-9">
+                <input asp-for="ZipCode" class="form-control" />
+                <span asp-validation-for="ZipCode" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="City" class="col-md-3 control-label"></label>
+            <div class="col-md-9">
+                <input asp-for="City" class="form-control" />
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Phone" class="col-md-3 control-label"></label>
+            <div class="col-md-9">
+                <input asp-for="Phone" class="form-control" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Payment" class="col-md-3 control-label"></label>
+            <div class="col-md-9">
+                <select asp-for="Payment" asp-items="@Html.GetEnumSelectList(typeof(Payment))" class="form-control">
+                    <option selected="selected" value=""></option>
+                </select>
+                <span asp-validation-for="Payment" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Delivery" class="col-md-3 control-label"></label>
+            <div class="col-md-9">
+                <select asp-for="Delivery" asp-items="@Html.GetEnumSelectList(typeof(Delivery))" class="form-control">
+                    <option selected="selected" value=""></option>
+                </select>
+                <span asp-validation-for="Delivery" class="text-danger"></span>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        <div class="text-center">
+            <button type="submit" class="btn btn-lg btn-primary top-margin-custom">Złóż zamówienie</button>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

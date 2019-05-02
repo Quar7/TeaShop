@@ -1,0 +1,48 @@
+﻿[
+  {
+    "outputFileName": "wwwroot/css/site.min.css",
+    "inputFiles": [
+      "wwwroot/css/site.css"
+    ]
+  },
+
+  {
+    "outputFileName": "wwwroot/js/CustomValidationScripts.min.js",
+    "inputFiles": [
+      "wwwroot/js/CustomValidationScripts.js"
+    ],
+
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/DisableSubmitButton.min.js",
+    "inputFiles": [
+      "wwwroot/js/DisableSubmitButton.js"
+    ],
+
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/AjaxScripts.min.js",
+    "inputFiles": [
+      "wwwroot/js/AjaxScripts.js"
+    ],
+
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+
+    "sourceMap": false
+  }
+]

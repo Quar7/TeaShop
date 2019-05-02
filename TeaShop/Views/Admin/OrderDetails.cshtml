@@ -1,0 +1,175 @@
+﻿@model OrderDetailsViewModel
+@{
+    ViewData["Title"] = $"Zamówienie nr {Model.Id}";
+    Layout = "_Adminlayout";
+}
+
+<h2>@ViewData["Title"]</h2>
+<hr />
+<a asp-controller="Admin" asp-action="Orders" class="btn btn-default"><i class="glyphicon glyphicon-chevron-left"></i>Wróć</a>
+<br /><br />
+<p class="text-success"><strong>@ViewData["StatusMessageOk"]</strong></p>
+<p class="text-danger"><strong>@ViewData["StatusMessageBad"]</strong></p>
+
+<h3 class="text-center">Szczegóły zamówienia</h3>
+<br />
+<div class="table-responsive">
+    <table class="table text-center">
+        <tr class="row-grey">
+            <th style="vertical-align: middle;">
+                Nr zamówienia
+            </th>
+            <th style="vertical-align: middle;">
+                Data
+            </th>
+            <th style="vertical-align: middle;">
+                Sposób dostawy
+            </th>
+            <th style="vertical-align: middle;">
+                Forma płatności
+            </th>
+            <th style="vertical-align: middle;">
+                Kwota
+            </th>
+            <th style="vertical-align: middle;">
+                Stan realizacji
+            </th>
+        </tr>
+        <tr>
+            <td style="vertical-align: middle;">
+                @Model.Id
+            </td>
+            <td style="vertical-align: middle;">
+                @Model.Date
+            </td>
+            <td style="vertical-align: middle;">
+                @Model.Delivery.GetDisplayName()
+            </td>
+            <td style="vertical-align: middle;">
+                @Model.Payment.GetDisplayName()
+            </td>
+            <td style="vertical-align: middle;">
+                @Model.TotalAmount.ToString("c")
+            </td>
+            <td style="vertical-align: middle;">
+                @(Model.Completed ? "Zrealizowano" : "W trakcie")
+            </td>
+        </tr>
+    </table>
+</div>
+
+<br /><br />
+<h3 class="text-center">Informacje o kliencie</h3>
+<br />
+<div class="table-responsive">
+    <table class="table text-center">
+        <tr class="row-grey">
+            <th style="vertical-align: middle;">
+                Imię
+            </th>
+            <th style="vertical-align: middle;">
+                Nazwisko
+            </th>
+            <th style="vertical-align: middle;">
+                Adres do wysyłki
+            </th>
+            <th style="vertical-align: middle;">
+                Nr telefonu
+            </th>
+            <th style="vertical-align: middle;">
+                Adres Email
+            </th>
+        </tr>
+        <tr>
+            <td style="vertical-align: middle;">
+                @Model.Customer.FirstName
+            </td>
+            <td style="vertical-align: middle;">
+                @Model.Customer.LastName
+            </td>
+            <td style="vertical-align: middle;">
+                @Model.Customer.Street @Model.Customer.HouseNumber / @Model.Customer.FlatNumber <br />
+                @Model.Customer.ZipCode @Model.Customer.City
+            </td>
+            <td style="vertical-align: middle;">
+                @Model.Customer.Phone
+            </td>
+            <td style="vertical-align: middle;">
+                @Model.Customer.Email
+            </td>
+        </tr>
+    </table>
+</div>
+
+<br /><br />
+<h3 class="text-center">Zamówione produkty</h3>
+<br />
+<div class="table-responsive">
+    <table class="table text-center">
+        <tr class="row-grey">
+            <th>
+                Zdjęcie
+            </th>
+            <th style="vertical-align: middle;">
+                Nazwa
+            </th>
+            <th style="vertical-align: middle;">
+                Rodzaj
+            </th>
+            <th style="vertical-align: middle;">
+                Kraj pochodzenia
+            </th>
+            <th style="vertical-align: middle;">
+                Cena
+            </th>
+            <th style="vertical-align: middle;">
+                Ilość
+            </th>
+            <th style="vertical-align: middle;">
+                Suma
+            </th>
+        </tr>
+
+        @foreach (var tea in Model.OrderTeas)
+            {
+            <tr>
+                <td class="col-xs-1">
+                    <img src="~/images/teaImage.jpg" />
+                </td>
+                <td style="vertical-align: middle;">
+                    @tea.Tea.Name
+                </td>
+                <td style="vertical-align: middle;">
+                    @tea.Tea.Category
+                </td>
+                <td style="vertical-align: middle;">
+                    @tea.Tea.CountryOfOrigin
+                </td>
+                <td style="vertical-align: middle;">
+                    @tea.Price.ToString("c")
+                </td>
+                <td style="vertical-align: middle;">
+                    @tea.Quantity
+                </td>
+                <td style="vertical-align: middle;">
+                    @((tea.Quantity * tea.Price).ToString("c"))
+                </td>
+            </tr>
+        }
+        <tr class="row-grey">
+            <td colspan="6" class="text-right" style="vertical-align: middle;">
+                <strong>Suma:</strong>
+            </td>
+            <td style="vertical-align: middle;">
+                <strong>@Model.OrderTeas.Sum(c => c.Price * c.Quantity).ToString("c")</strong>
+            </td>
+        </tr>
+    </table>
+</div>
+
+@if (!Model.Completed)
+{
+    <form asp-controller="Admin" asp-action="ChangeStatus" asp-route-id="@Model.Id" method="post" class="form-horizontal text-center">
+        <button type="submit" class="btn btn-lg btn-success">Zrealizuj zamówienie</button>
+    </form>
+}

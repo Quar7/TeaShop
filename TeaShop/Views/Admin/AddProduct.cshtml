@@ -1,0 +1,80 @@
+﻿@model DetailsViewModel
+@{
+    ViewData["Title"] = "Dodaj produkt";
+    Layout = "_Adminlayout";
+}
+
+<h2>@ViewData["Title"]</h2>
+<hr />
+<a asp-controller="Admin" asp-action="Products" class="btn btn-default"><i class="glyphicon glyphicon-chevron-left"></i>Wróć</a>
+<br /><br />
+<p class="text-success"><strong>@ViewData["StatusMessageOk"]</strong></p>
+<p class="text-danger"><strong>@ViewData["StatusMessageBad"]</strong></p>
+
+
+<form asp-controller="Admin" asp-action="AddProduct" method="post" class="form-horizontal">
+
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <br />
+
+    <div class="form-group">
+        <label asp-for="Name" class="col-md-2 control-label"></label>
+        <div class="col-md-10">
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Category" class="col-md-2 control-label"></label>
+        <div class="col-md-10">
+            <select asp-for="Category" asp-items="@Html.GetEnumSelectList(typeof(TeaCategory))" class="form-control">
+                <option selected="selected" value=""></option>
+            </select>
+            <span asp-validation-for="Category" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="CountryOfOrigin" class="col-md-2 control-label"></label>
+        <div class="col-md-10">
+            <input asp-for="CountryOfOrigin" class="form-control" />
+            <span asp-validation-for="CountryOfOrigin" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Description" class="col-md-2 control-label"></label>
+        <div class="col-md-10">
+            <textarea asp-for="Description" class="form-control textarea" rows="10" cols="30"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Price" class="col-md-2 control-label"></label>
+        <div class="col-md-4">
+            <input asp-for="Price" class="form-control" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Quantity" class="col-md-2 control-label"></label>
+        <div class="col-md-4">
+            <input asp-for="Quantity" class="form-control" />
+            <span asp-validation-for="Quantity" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button type="submit" class="btn btn-default">Dodaj produkt</button>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

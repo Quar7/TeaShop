@@ -1,0 +1,10 @@
+﻿@model bool
+
+@if (Model)
+{
+    <a is-active-route asp-controller="Cart" asp-action="Index"><i class="glyphicon glyphicon-shopping-cart" style="color: #fff"></i> Koszyk</a>
+}
+else
+{
+    <a is-active-route asp-controller="Cart" asp-action="Index"><i class="glyphicon glyphicon-shopping-cart"></i> Koszyk</a>
+}

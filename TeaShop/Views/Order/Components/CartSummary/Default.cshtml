@@ -1,0 +1,51 @@
+﻿@model CartViewModel
+
+<div class="table-responsive">
+    <table class="table text-center">
+        <tr class="row-grey">
+            <th>
+                Zdjęcie
+            </th>
+            <th style="vertical-align: middle;">
+                Nazwa
+            </th>
+            <th style="vertical-align: middle;">
+                Cena
+            </th>
+            <th style="vertical-align: middle;">
+                Ilość
+            </th>
+            <th style="vertical-align: middle;">
+                Razem
+            </th>
+        </tr>
+        @foreach (var cartLine in Model.CartLine)
+        {
+            <tr>
+                <td class="col-xs-1">
+                    <img src="~/images/teaImage.jpg" />
+                </td>
+                <td style="vertical-align: middle;">
+                    @cartLine.Tea.Name
+                </td>
+                <td style="vertical-align: middle;">
+                    @cartLine.Price.ToString("c")
+                </td>
+                <td style="vertical-align: middle;">
+                    @cartLine.Quantity
+                </td>
+                <td style="vertical-align: middle;">
+                    @cartLine.CartLineSum
+                </td>
+            </tr>
+        }
+        <tr class="row-grey">
+            <td colspan="4" class="text-right">
+                <strong>Razem:</strong>
+            </td>
+            <td>
+                <strong>@Model.TotalAmount</strong>
+            </td>
+        </tr>
+    </table>
+</div>
